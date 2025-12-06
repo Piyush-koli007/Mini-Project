@@ -1,310 +1,321 @@
 /* src/pages/NGODashboard.css */
 
-/* --- Main Layout --- */
+/* --- Layout & Container --- */
 .dashboard-container {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 100px auto 2rem; /* Account for fixed navbar */
   padding: 2rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
+  color: var(--text-main);
+  animation: fadeInPage 0.8s ease-out;
 }
 
-/* --- Header Section --- */
+/* --- Header --- */
 .dashboard-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #eee;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--glass-border);
 }
 
 .dashboard-header h1 {
-  font-size: 1.8rem;
-  color: #2c3e50;
+  font-size: 2.5rem;
+  background: linear-gradient(90deg, #fff, var(--primary-glow));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   margin: 0;
 }
 
 .account-info {
-  font-family: monospace;
-  background: #f8f9fa;
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: 1px solid #dee2e6;
-  color: #666;
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-}
-
-/* --- Buttons --- */
-.logout-btn {
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: background 0.2s;
-}
-
-.logout-btn:hover {
-  background-color: #c82333;
-}
-
-.donate-now-btn {
-  background-color: #f6851b; /* MetaMask Orange */
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  font-size: 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.primary-btn {
-  background-color: #007bff;
-  color: white;
-  border: none;
+  font-family: 'Space Grotesk', monospace;
+  background: rgba(255, 255, 255, 0.05);
   padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  color: var(--primary-glow);
+  font-size: 0.9rem;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+}
+
+.account-info:hover {
+  border-color: var(--primary-brand);
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
 }
 
 /* --- Navigation Tabs --- */
 .ngo-nav {
   display: flex;
-  gap: 10px;
-  margin-bottom: 2rem;
-  border-bottom: 2px solid #e9ecef;
-  padding-bottom: 2px;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--glass-border);
+  padding-bottom: 10px;
 }
 
 .ngo-nav button {
-  background: none;
+  background: transparent;
   border: none;
-  padding: 10px 20px;
-  font-size: 1rem;
-  color: #6c757d;
+  font-size: 1.1rem;
+  color: var(--text-muted);
   cursor: pointer;
+  padding: 10px 15px;
   font-weight: 600;
-  transition: all 0.2s;
-  border-bottom: 3px solid transparent;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.ngo-nav button::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -11px;
+  left: 0;
+  background: var(--primary-brand);
+  transition: width 0.3s ease;
+  box-shadow: 0 0 10px var(--primary-brand);
 }
 
 .ngo-nav button:hover {
-  color: #007bff;
-  background-color: #f8f9fa;
+  color: white;
 }
 
 .ngo-nav button.active {
-  color: #007bff;
-  border-bottom: 3px solid #007bff;
+  color: var(--primary-brand);
 }
 
-/* --- Stats Cards --- */
+.ngo-nav button.active::after {
+  width: 100%;
+}
+
+/* --- Stats Cards (Staggered Animation) --- */
 .stats-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
 .stat-card {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  border: 1px solid #e9ecef;
-  text-align: center;
+  background: var(--card-dark);
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--glass-border);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+  
+  /* Animation */
+  opacity: 0;
+  animation: slideUpFade 0.6s ease-out forwards;
+}
+
+/* Stagger delays for up to 3 cards */
+.stat-card:nth-child(1) { animation-delay: 0.1s; }
+.stat-card:nth-child(2) { animation-delay: 0.2s; }
+.stat-card:nth-child(3) { animation-delay: 0.3s; }
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--primary-brand);
+  box-shadow: 0 10px 30px -10px rgba(139, 92, 246, 0.2);
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 4px;
+  background: linear-gradient(90deg, var(--primary-brand), var(--secondary-brand));
 }
 
 .stat-card h2 {
-  font-size: 1rem;
-  color: #6c757d;
-  margin-top: 0;
+  font-size: 0.9rem;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  margin-top: 0;
 }
 
 .stat-card p {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #2c3e50;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
   margin: 10px 0 0;
+  font-family: 'Space Grotesk', sans-serif;
 }
 
-/* --- Tables --- */
+/* --- Tables (Glassy & Interactive) --- */
 .history-table {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  background: rgba(24, 24, 27, 0.4);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--glass-border);
+  padding: 1.5rem;
   overflow: hidden;
-  margin-bottom: 2rem;
-  padding: 1rem;
-  border: 1px solid #eee;
+  backdrop-filter: blur(10px);
+  
+  /* Animation */
+  opacity: 0;
+  animation: slideUpFade 0.8s ease-out forwards;
+  animation-delay: 0.4s; /* Waits for cards */
 }
 
 .history-table h2 {
+  color: var(--text-main);
+  font-size: 1.4rem;
   margin-top: 0;
-  font-size: 1.2rem;
-  color: #495057;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--glass-border);
+  padding-bottom: 1rem;
 }
 
 table {
   width: 100%;
-  border-collapse: collapse;
-}
-
-th, td {
-  padding: 12px 15px;
-  text-align: left;
-  border-bottom: 1px solid #e9ecef;
+  border-collapse: separate; 
+  border-spacing: 0 8px; /* Spacing between rows */
 }
 
 th {
-  background-color: #f8f9fa;
-  color: #495057;
-  font-weight: 600;
+  text-align: left;
+  padding: 12px 15px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-tr:hover {
-  background-color: #f8f9fa;
+td {
+  padding: 16px 15px;
+  background: rgba(255, 255, 255, 0.02);
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
 }
 
-/* --- Forms (Create Campaign) --- */
+tr td:first-child { border-left: 1px solid var(--glass-border); border-top-left-radius: 8px; border-bottom-left-radius: 8px; }
+tr td:last-child { border-right: 1px solid var(--glass-border); border-top-right-radius: 8px; border-bottom-right-radius: 8px; }
+
+/* Row Hover Effect */
+tbody tr {
+  transition: all 0.2s ease;
+}
+tbody tr:hover td {
+  background: rgba(139, 92, 246, 0.05);
+  border-color: rgba(139, 92, 246, 0.3);
+  transform: scale(1.01);
+}
+
+/* --- Status Badges (Neon Glow) --- */
+.status-badge, .status-pending, .status-distributed, .status-success, .status-fail {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-pending { 
+  background: rgba(245, 158, 11, 0.15); 
+  color: #fbbf24; 
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.1);
+}
+
+.status-distributed, .status-approved { 
+  background: rgba(16, 185, 129, 0.15); 
+  color: #34d399; 
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.1);
+}
+
+.status-fail, .status-rejected { 
+  background: rgba(244, 63, 94, 0.15); 
+  color: #fb7185; 
+  border: 1px solid rgba(244, 63, 94, 0.3);
+  box-shadow: 0 0 10px rgba(244, 63, 94, 0.1);
+}
+
+/* --- Forms (Create Campaign / Application) --- */
 .campaign-card {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  background: var(--card-dark);
+  padding: 2.5rem;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--glass-border);
   max-width: 600px;
   margin: 0 auto;
+  box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+  animation: slideUpFade 0.6s ease-out forwards;
 }
 
-.create-campaign-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.create-campaign-form input {
-  padding: 12px;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-.create-campaign-form button {
-  background-color: #28a745;
-  color: white;
-  padding: 12px;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-.create-campaign-form button:hover {
-  background-color: #218838;
-}
-
-/* --- Distribution Inputs inside Table --- */
-.table-input {
-  padding: 6px;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
+.create-campaign-form input, 
+.create-campaign-form select,
+.create-campaign-form textarea {
   width: 100%;
-}
-
-.distribute-btn {
-  background-color: #007bff;
+  padding: 14px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
   color: white;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  font-family: 'Outfit', sans-serif;
+  transition: 0.3s;
+  box-sizing: border-box;
 }
 
-.distribute-btn:hover {
-  background-color: #0056b3;
+.create-campaign-form input:focus, .create-campaign-form select:focus {
+  outline: none;
+  border-color: var(--primary-brand);
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.15);
 }
 
-/* --- Application Action Buttons --- */
-.approve-btn {
-  background-color: #28a745;
+.create-campaign-form button, .primary-btn, .distribute-btn {
+  background: var(--primary-brand);
   color: white;
+  padding: 12px 24px;
   border: none;
-  padding: 5px 10px;
-  border-radius: 3px;
+  border-radius: 10px;
+  font-weight: 700;
   cursor: pointer;
-  margin-right: 5px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
 }
 
-.reject-btn {
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 3px;
-  cursor: pointer;
+.create-campaign-form button:hover, .primary-btn:hover, .distribute-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
 }
 
-/* --- Status Badges --- */
-.status-success {
-  background-color: #d4edda;
-  color: #155724;
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 0.85rem;
-  font-weight: bold;
-}
-
-.status-fail {
-  background-color: #f8d7da;
-  color: #721c24;
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 0.85rem;
-  font-weight: bold;
-}
-
-.status-distributed {
-  background-color: #cce5ff;
-  color: #004085;
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 0.85rem;
-  font-weight: bold;
-}
-
-.status-pending {
-  background-color: #fff3cd;
-  color: #856404;
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 0.85rem;
-  font-weight: bold;
-}
-
-/* --- Wallet Connect Box --- */
-.connect-wallet-container {
-  text-align: center;
-  padding: 3rem;
-  background: #fff;
+.logout-btn {
+  background: rgba(244, 63, 94, 0.1);
+  color: #fb7185;
+  border: 1px solid rgba(244, 63, 94, 0.3);
+  padding: 8px 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  margin-top: 2rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
 }
 
-.error-message {
-  color: red;
-  margin-top: 1rem;
+.logout-btn:hover {
+  background: rgba(244, 63, 94, 0.2);
+  box-shadow: 0 0 15px rgba(244, 63, 94, 0.2);
+}
+
+/* --- Animations --- */
+@keyframes fadeInPage {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

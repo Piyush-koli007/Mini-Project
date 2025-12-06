@@ -1,5 +1,6 @@
+// src/components/Navbar.js
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Import Link
+import { Link } from 'react-router-dom';
 import './Navbar.css';
 
 function Navbar() {
@@ -12,7 +13,12 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        <Link to="/">SecureFund</Link> {/* Use Link for home */}
+        <Link to="/" className="logo-container">
+          {/* Using favicon1.ico as a placeholder logo. 
+              Replace '/favicon1.ico' with your actual logo path like '/logo.png' */}
+          <img src="/favicon1.ico" alt="SecureFund Logo" className="nav-logo-img" />
+          <span className="nav-logo-text">SecureFund</span>
+        </Link>
       </div>
 
       <div className="hamburger" onClick={toggleMenu}>
@@ -30,7 +36,6 @@ function Navbar() {
             <li><Link to="/login?role=donor">Donor</Link></li>
             <li><Link to="/login?role=ngo">NGO</Link></li>
             <li><Link to="/login?role=beneficiary">Beneficiary</Link></li>
-            
           </ul>
         </li>
       </ul>

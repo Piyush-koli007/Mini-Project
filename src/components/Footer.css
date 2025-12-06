@@ -1,25 +1,54 @@
+/* src/components/Footer.css */
+
 .footer-section {
-  background-color: var(--dark-gray);
-  color: var(--light-gray);
+  background-color: var(--bg-dark); /* Use your theme variable */
+  border-top: 1px solid var(--glass-border);
+  color: var(--text-muted);
   padding-top: 4rem;
+  margin-top: auto; /* Push to bottom if content is short */
+  width: 100%;
 }
 
 .footer-content {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: 1.5fr 1fr 1fr; /* Custom columns: Wider first col for About */
   gap: 2rem;
   padding-bottom: 3rem;
+  
+  /* --- ALIGNMENT FIX START --- */
+  width: 100%;
+  max-width: 1200px;       /* Matches Dashboard max-width */
+  margin: 0 auto;          /* Centers the container */
+  padding-left: 2rem;      /* Matches Dashboard padding (32px) */
+  padding-right: 2rem;     /* Matches Dashboard padding */
+  box-sizing: border-box;  /* Ensures padding is calculated correctly */
+  /* --- ALIGNMENT FIX END --- */
 }
 
+/* Typography & Links */
 .footer-about h3 {
+  font-family: 'Space Grotesk', sans-serif;
   font-size: 1.5rem;
   margin-bottom: 1rem;
+  color: white;
+  background: linear-gradient(90deg, #fff, var(--primary-glow));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.footer-about p {
+  line-height: 1.6;
+  max-width: 300px;
 }
 
 .footer-links h4,
 .footer-social h4 {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.1rem;
+  color: white;
+  margin-bottom: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .footer-links ul {
@@ -29,46 +58,69 @@
 }
 
 .footer-links li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
 }
 
 .footer-links a {
-  color: var(--light-gray);
+  color: var(--text-muted);
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
 }
 
 .footer-links a:hover {
-  color: var(--primary-blue);
+  color: var(--primary-brand);
+  padding-left: 5px; /* Subtle slide effect */
 }
 
+/* Social Icons */
 .social-icons {
   display: flex;
   gap: 1rem;
 }
 
 .social-icons a {
-  color: var(--dark-gray);
-  background-color: var(--light-gray);
+  color: white;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
   width: 40px;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
+  border-radius: 12px; /* Soft square looks more modern than circle */
   text-decoration: none;
   font-weight: bold;
   transition: all 0.3s ease;
 }
 
 .social-icons a:hover {
-  background-color: var(--primary-blue);
-  color: var(--white);
+  background-color: var(--primary-brand);
+  border-color: var(--primary-brand);
   transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
 }
 
 .footer-bottom {
   text-align: center;
   padding: 1.5rem 0;
-  border-top: 1px solid #495057;
+  border-top: 1px solid var(--glass-border);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr; /* Stack vertically on mobile */
+    text-align: center;
+  }
+  
+  .footer-about p {
+    margin: 0 auto 1.5rem auto; /* Center paragraph */
+  }
+  
+  .social-icons {
+    justify-content: center;
+  }
 }

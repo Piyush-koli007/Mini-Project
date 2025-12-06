@@ -1,225 +1,268 @@
 /* src/pages/DonorDashboard.css */
+@import './NGODashboard.css'; 
 
-/* General Layout */
-.dashboard-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
-}
+/* --- Specific Overrides for Donor --- */
 
-/* Header */
-.dashboard-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #eee;
-}
-
-.dashboard-header h1 {
+.section-title {
   font-size: 1.8rem;
-  color: #2c3e50;
-  margin: 0;
-}
-
-.account-info {
-  font-family: monospace;
-  background: #f8f9fa;
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: 1px solid #dee2e6;
-  color: #666;
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-  display: inline-block;
-}
-
-/* Buttons */
-.logout-btn {
-  background-color: #dc3545;
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
   color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background 0.2s;
+  border-left: 4px solid var(--primary-brand);
+  padding-left: 1rem;
 }
 
-.logout-btn:hover { background-color: #c82333; }
-
-.donate-now-btn {
-  background-color: #f6851b;
-  color: white;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-/* Stats Cards */
-.stats-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-.stat-card {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-  border: 1px solid #e9ecef;
-  text-align: center;
-}
-
-.stat-card h2 {
-  font-size: 0.9rem;
-  color: #6c757d;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin: 0;
-}
-
-.stat-card p {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #2c3e50;
-  margin: 10px 0 0;
-}
-
-/* Campaigns List */
+/* Campaigns Grid */
 .campaigns-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 3rem;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
 }
 
+/* Ensure no overlap */
 .campaign-card {
-  background: white;
-  border: 1px solid #dee2e6;
-  border-radius: 8px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  max-width: 100%; /* Fixes the NGO dashboard max-width: 600px override */
+  margin: 0;       /* Removes centering margin */
+  
+  background: rgba(24, 24, 27, 0.6);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 2rem;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  backdrop-filter: blur(10px);
+  
+  /* Animation */
+  opacity: 0;
+  animation: popIn 0.6s ease-out forwards;
 }
 
-.campaign-card h3 { margin-top: 0; color: #007bff; }
-.ngo-name { font-size: 0.9rem; color: #6c757d; font-style: italic; margin-bottom: 10px; }
-.goal-status { font-weight: bold; margin: 10px 0; }
+/* Stagger Campaign Cards */
+.campaign-card:nth-child(1) { animation-delay: 0.1s; }
+.campaign-card:nth-child(2) { animation-delay: 0.2s; }
+.campaign-card:nth-child(3) { animation-delay: 0.3s; }
+.campaign-card:nth-child(4) { animation-delay: 0.4s; }
+
+.campaign-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  border-color: var(--primary-brand);
+  background: rgba(24, 24, 27, 0.8);
+  box-shadow: 
+    0 20px 40px -10px rgba(0,0,0,0.5),
+    0 0 20px rgba(139, 92, 246, 0.2); 
+  z-index: 10; /* Ensures hovered card is on top */
+}
+
+/* ... (Keep existing text and button styles below) ... */
+
+.campaign-card h3 {
+  font-size: 1.5rem;
+  color: white;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(90deg, #fff, var(--primary-glow));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ngo-name {
+  color: var(--secondary-brand);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  display: block;
+  letter-spacing: 1px;
+  
+  /* ADDED: Forces long wallet addresses to wrap to the next line */
+  word-break: break-all; 
+  white-space: normal;
+  line-height: 1.4;
+}
+
+/* --- FIX: Raised Amount Numbers --- */
+.goal-status {
+  font-family: 'Space Grotesk', monospace;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  margin: 1.5rem 0 1rem;
+  border-top: 1px solid var(--glass-border);
+  padding-top: 1rem;
+  
+  /* ADDED: Ensures long numbers (e.g. 0.0000001) don't overflow */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+/* --- FIX: Stats Cards Big Numbers --- */
+.stat-card p {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
+  margin: 10px 0 0;
+  font-family: 'Space Grotesk', sans-serif;
+  
+  /* ADDED: Handles giant balance numbers */
+  word-break: break-all;
+  line-height: 1.1;
+}
+
+.goal-status {
+  font-family: 'Space Grotesk', monospace;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  margin: 1.5rem 0 1rem;
+  border-top: 1px solid var(--glass-border);
+  padding-top: 1rem;
+}
 
 .donate-form {
   display: flex;
   gap: 10px;
-  margin-top: 15px;
+  margin-top: auto; 
 }
 
 .donate-form input {
   flex: 1;
-  padding: 8px;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  padding: 12px;
+  color: white;
+  font-family: 'Space Grotesk', monospace;
+  width: 100%; /* Ensure input takes width */
+  box-sizing: border-box;
+}
+
+.donate-form input:focus {
+  border-color: var(--secondary-brand);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+  outline: none;
 }
 
 .donate-form button {
-  background-color: #28a745;
-  color: white;
+  background: var(--secondary-brand); 
+  color: #000; 
   border: none;
-  padding: 8px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-/* Tables */
-.history-table {
-  background: white;
+  padding: 0 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  overflow-x: auto;
-  padding: 1rem;
-  border: 1px solid #eee;
-}
-
-.history-table h2 {
-  font-size: 1.2rem;
-  margin-top: 0;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 600px;
-}
-
-th, td {
-  padding: 12px 15px;
-  text-align: left;
-  border-bottom: 1px solid #e9ecef;
-}
-
-th { background-color: #f8f9fa; color: #495057; font-weight: 600; }
-tr:hover { background-color: #f8f9fa; }
-
-/* Status Badges */
-.status-badge {
-  padding: 4px 10px;
-  border-radius: 15px;
-  font-size: 0.8rem;
-  font-weight: bold;
+  font-weight: 800;
   text-transform: uppercase;
+  cursor: pointer;
+  transition: 0.3s;
 }
-.status-pending { background-color: #fff3cd; color: #856404; }
-.status-partial { background-color: #cce5ff; color: #004085; }
-.status-completed { background-color: #d4edda; color: #155724; }
 
-/* Progress Bar */
+.donate-form button:hover {
+  background: #34d399;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+  transform: scale(1.05);
+}
+
+.tx-link, .tx-link-success {
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.85rem;
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: 0.2s;
+}
+
+.tx-link { color: var(--primary-glow); background: rgba(139, 92, 246, 0.1); }
+.tx-link:hover { background: rgba(139, 92, 246, 0.3); color: white; }
+
+.tx-link-success { color: var(--secondary-brand); background: rgba(16, 185, 129, 0.1); }
+.tx-link-success:hover { background: rgba(16, 185, 129, 0.3); color: white; }
+
 .progress-bar-bg {
   width: 100%;
-  background-color: #e9ecef;
   height: 6px;
-  border-radius: 3px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
   margin-top: 5px;
+  overflow: hidden;
 }
+
 .progress-bar-fill {
-  background-color: #007bff;
   height: 100%;
-  border-radius: 3px;
+  background: linear-gradient(90deg, var(--secondary-brand), var(--primary-brand));
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.connect-wallet-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  
+  /* Glass Card Styling */
+  background: rgba(24, 24, 27, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  
+  /* Centering & Size */
+  max-width: 500px;
+  margin: 4rem auto; /* Centers the card horizontally */
+  padding: 4rem 2rem;
+  
+  /* Glow/Shadow */
+  box-shadow: 0 20px 50px -10px rgba(0,0,0,0.5);
+  animation: popIn 0.6s ease-out forwards;
 }
 
-/* Links & Text */
-.tx-link { color: #007bff; text-decoration: none; font-weight: 500; font-size: 0.9rem; }
-.tx-link:hover { text-decoration: underline; }
-.tx-link-success { color: #28a745; text-decoration: none; font-weight: 600; font-size: 0.9rem; }
-.tx-link-success:hover { text-decoration: underline; }
-
-.addr-text {
-  font-family: monospace;
-  background: #f1f3f5;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 0.85rem;
-  color: #333;
+/* The Title "Connect Your Wallet" */
+.connect-wallet-container h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  
+  /* Gradient Text */
+  background: linear-gradient(135deg, #fff 0%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.text-muted { color: #adb5bd; font-style: italic; font-size: 0.85rem; }
-
-/* Loading Spinner */
-.loading-container { text-align: center; padding: 10px; }
-.loading-spinner {
-  border: 3px solid #f3f3f3;
-  border-top: 3px solid #007bff;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  animation: spin 1s linear infinite;
-  margin: 0 auto 5px;
+/* The Connect Button */
+.donate-now-btn {
+  background: linear-gradient(135deg, #f6851b, #e2761b); /* MetaMask Orange */
+  color: white;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  
+  padding: 1rem 3rem;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  
+  /* Glow Effect */
+  box-shadow: 0 0 20px rgba(246, 133, 27, 0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+.donate-now-btn:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 0 40px rgba(246, 133, 27, 0.7);
+}
+
+/* Error Message Styling */
+.error-message {
+  margin-top: 1.5rem;
+  color: #fb7185; /* Neon Red/Pink */
+  background: rgba(244, 63, 94, 0.1);
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid rgba(244, 63, 94, 0.3);
+  font-size: 0.9rem;
+}
+
+@keyframes popIn {
+  0% { opacity: 0; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1); }
+}

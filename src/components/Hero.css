@@ -1,73 +1,109 @@
+/* src/components/Hero.css */
 .hero-section {
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   min-height: 100vh;
-  color: var(--dark-gray);
+  position: relative; /* Crucial for absolute positioning of video */
+  overflow: hidden;   /* Prevents video spillover */
   padding: 0 2rem;
-  background-color: var(--light-gray); /* Ensures consistent background */
-  /* background-image: url('E:\vs\react\SecureF\securefund-client\public\images(1).jpg'); */
-   background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
+  color: white;
 }
 
+/* Video Container */
+.video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0; /* Places video behind content */
+}
+
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures video fills the screen */
+}
+
+/* Dark Overlay */
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(9, 9, 11, 0.75); /* Dark tint */
+  backdrop-filter: blur(3px); /* Optional: Blurs video slightly for text readability */
+  z-index: 1; /* Sits on top of video, below text */
+}
+
+/* Content Styling */
 .hero-content {
-  max-width: 800px;
+  position: relative;
+  z-index: 2; /* Ensures text is clickable and visible */
+  max-width: 900px;
 }
 
 .hero-title {
-  font-size: clamp(2.5rem, 6vw, 4rem); /* Responsive font size */
-  font-weight: 700;
-  margin-bottom: 1rem;
-  line-height: 1.2;
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  /* Gradient Text */
+  background: linear-gradient(135deg, #ffffff 0%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
 .hero-subtitle {
-  font-size: 1.15rem;
-  font-weight: 400;
-  margin-bottom: 2.5rem;
-  color: var(--text-color);
+  font-size: 1.25rem;
+  color: var(--text-muted); /* Using variable from index.css */
+  line-height: 1.6;
   max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto 3rem auto;
 }
 
 .hero-buttons {
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
+/* Gen Z Button Styles */
 .btn {
-  padding: 1rem 2rem;
+  padding: 1rem 2.5rem;
   border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
   text-decoration: none;
-  font-weight: 500;
+  cursor: pointer;
   transition: all 0.3s ease;
-  border: none;
 }
 
 .btn-primary {
-  background-color: var(--primary-blue);
-  color: var(--white);
+  background: var(--primary-brand);
+  color: white;
+  border: 1px solid var(--primary-brand);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.4); /* Neon Glow */
 }
 
 .btn-primary:hover {
-  background-color: var(--primary-dark-blue);
   transform: translateY(-3px);
-  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+  box-shadow: 0 0 35px rgba(139, 92, 246, 0.7);
 }
 
 .btn-secondary {
-  background-color: var(--white);
-  color: var(--primary-blue);
-  border: 1px solid var(--primary-blue);
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
 }
 
 .btn-secondary:hover {
-  background-color: var(--primary-blue);
-  color: var(--white);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: white;
   transform: translateY(-3px);
 }

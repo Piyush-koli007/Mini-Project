@@ -21,7 +21,6 @@ const DonorDashboard = () => {
   const [error, setError] = useState('');
   
   // --- UI State ---
-  // FIX: Removed 'provider' state to solve "no-unused-vars" warning
   const [balance, setBalance] = useState("0"); 
   const [ngoNameMap, setNgoNameMap] = useState(new Map());
   const [explorerUrl, setExplorerUrl] = useState(""); 
@@ -56,9 +55,7 @@ const DonorDashboard = () => {
     try {
       if (!window.ethereum) throw new Error("MetaMask not found.");
       
-      // We use a local variable for provider here, we don't need to save it to state
       const provider = new ethers.BrowserProvider(window.ethereum);
-      
       const signer = await provider.getSigner();
       const userAccount = await signer.getAddress();
       const contractInstance = new ethers.Contract(contractAddress, contractABI, signer);
@@ -101,7 +98,6 @@ const DonorDashboard = () => {
         const distMap = new Map();
         try {
            const distFilter = contract.filters.FundsDistributed(); 
-           // Safety check for the filter
            if(distFilter) {
                const distEvents = await contract.queryFilter(distFilter);
                distEvents.forEach(event => {
@@ -138,12 +134,10 @@ const DonorDashboard = () => {
           // Calculate Percentage
           const percentage = totalAmount > 0 ? (usedAmount / totalAmount) * 100 : 0;
 
-          // Determine Status
           let statusString = "Pending";
           if (percentage > 0 && percentage < 99.9) statusString = "Partial";
           if (percentage >= 99.9) statusString = "Completed";
 
-          // Determine Beneficiary
           const lastBeneficiary = distMap.get(donationId);
           
           return {
@@ -158,7 +152,6 @@ const DonorDashboard = () => {
           };
         });
 
-        // Sort: Newest First
         formattedHistory.sort((a, b) => b.id - a.id);
         setMyDonations(formattedHistory);
         
@@ -206,7 +199,7 @@ const DonorDashboard = () => {
     try { await logout(); navigate('/login'); } catch (e) {}
   };
 
-  // --- 5. Split Lists ---
+  // --- 5. Render ---
   const activeDonations = myDonations.filter(d => d.status !== "Completed");
   const completedDonations = myDonations.filter(d => d.status === "Completed");
 
@@ -233,30 +226,36 @@ const DonorDashboard = () => {
             <div className="stat-card"><h2>Campaigns</h2><p>{stats.campaignsSupported}</p></div>
           </div>
 
-          <div className="campaigns-list">
-            <h2>Active Campaigns</h2>
-            {campaigns.length === 0 && <p>No active campaigns found.</p>}
-            {campaigns.map(campaign => (
-              <div key={campaign.id} className="campaign-card">
-                <h3>{campaign.title}</h3>
-                <p className="ngo-name">By: {campaign.ngoName}</p>
-                <p>{campaign.description}</p>
-                <p className="goal-status">Raised: {campaign.amountRaised} / {campaign.goal} ETH</p>
-                {loadingCampaignId === campaign.id ? (
-                  <div className="loading-container"><div className="loading-spinner"></div><p>Processing...</p></div>
-                ) : (
-                  <form className="donate-form" onSubmit={(e) => handleDonate(e, campaign.id)}>
-                    <input name="amount" type="text" placeholder="Amount in ETH" required />
-                    <button type="submit">Donate Now</button> 
-                  </form>
-                )}
-              </div>
-            ))}
-          </div>
+          {/* --- FIXED: Header is now OUTSIDE the grid container --- */}
+          <h2 className="section-title">Active Campaigns</h2>
+          
+          {campaigns.length === 0 ? (
+            <p className="no-data-text">No active campaigns found.</p>
+          ) : (
+            <div className="campaigns-list">
+              {campaigns.map(campaign => (
+                <div key={campaign.id} className="campaign-card">
+                  <h3>{campaign.title}</h3>
+                  <span className="ngo-name">By: {campaign.ngoName}</span>
+                  <p>{campaign.description}</p>
+                  <p className="goal-status">Raised: {campaign.amountRaised} / {campaign.goal} ETH</p>
+                  
+                  {loadingCampaignId === campaign.id ? (
+                    <div className="loading-container"><div className="loading-spinner"></div><p>Processing...</p></div>
+                  ) : (
+                    <form className="donate-form" onSubmit={(e) => handleDonate(e, campaign.id)}>
+                      <input name="amount" type="number" step="0.0001" placeholder="ETH" required />
+                      <button type="submit">Donate</button> 
+                    </form>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
 
           {/* TABLE 1: ACTIVE / QUEUE */}
-          <div className="history-table" style={{ marginTop: '2rem' }}>
-            <h2 style={{ color: '#0056b3' }}>⏳ Active Queue</h2>
+          <div className="history-table" style={{ marginTop: '3rem' }}>
+            <h2 style={{ color: '#a78bfa' }}>⏳ Active Queue</h2>
             {activeDonations.length === 0 ? <p>No active donations.</p> : (
               <table>
                 <thead>
@@ -305,8 +304,8 @@ const DonorDashboard = () => {
           </div>
 
           {/* TABLE 2: COMPLETED */}
-          <div className="history-table" style={{ marginTop: '2rem' }}>
-            <h2 style={{ color: '#155724' }}>✅ Completed Distributions</h2>
+          <div className="history-table" style={{ marginTop: '3rem' }}>
+            <h2 style={{ color: '#34d399' }}>✅ Completed Distributions</h2>
             {completedDonations.length === 0 ? <p>No completed donations.</p> : (
               <table>
                 <thead>

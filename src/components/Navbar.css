@@ -1,80 +1,85 @@
-/* Paste the original Navbar.css content, then ADD this at the end */
+/* src/components/Navbar.css */
+
+/* ... (Keep existing .navbar styles) ... */
+
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 5%;
-  background-color: rgba(255, 255, 255, 0.8);
-  /* Cross-browser support for background blur */
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px); /* <-- ADDED FOR SAFARI */
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid #ddd;
+  background: rgba(9, 9, 11, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--glass-border);
   position: fixed;
   width: 90%;
   top: 0;
   left: 0;
   z-index: 1000;
 }
-.navbar-logo a {
-  font-size: 1.5rem; font-weight: bold; color: #333; text-decoration: none;
+
+/* --- LOGO STYLES START --- */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Space between logo and text */
+  text-decoration: none;
 }
+
+.nav-logo-img {
+  height: 40px; /* Size of the logo */
+  width: auto;
+  /* Adds a neon glow to the logo itself */
+  filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.6)); 
+  transition: transform 0.3s ease;
+}
+
+.logo-container:hover .nav-logo-img {
+  transform: scale(1.1) rotate(5deg); /* Fun hover effect */
+}
+
+.nav-logo-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #fff, var(--primary-glow));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+/* --- LOGO STYLES END --- */
+
+/* ... (Keep existing links, hamburger, and dropdown styles) ... */
 .navbar-links {
   list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: 2rem;
 }
 .navbar-links a {
-  text-decoration: none; color: #555; font-weight: 500; transition: color 0.3s ease;
+  text-decoration: none; color: var(--text-muted); font-weight: 500; transition: color 0.3s ease;
 }
 .navbar-links a:hover {
-  color: #007bff;
+  color: var(--text-main);
 }
 .hamburger { display: none; }
 
-/* --- Dropdown Styles --- */
-.dropdown {
-  position: relative;
-}
+/* ... (Keep Dropdown styles) ... */
+.dropdown { position: relative; }
 .dropdown-toggle {
-  cursor: pointer;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  background-color: var(--primary-blue);
-  color: var(--white);
-  font-weight: 500;
-  transition: background-color 0.3s ease;
+  cursor: pointer; padding: 0.5rem 1rem; border-radius: 20px;
+  background-color: var(--card-dark); color: var(--white); border: 1px solid var(--glass-border);
+  font-weight: 500; transition: all 0.3s ease;
 }
 .dropdown-toggle:hover {
-  background-color: var(--primary-dark-blue);
+  background-color: var(--primary-brand); box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
 }
 .dropdown-menu {
-  display: none;
-  position: absolute;
-  top: 130%;
-  right: 0;
-  background-color: var(--white);
-  list-style: none;
-  padding: 0.5rem 0;
-  margin: 0;
-  border-radius: 8px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  min-width: 150px;
-  z-index: 1100;
+  display: none; position: absolute; top: 130%; right: 0;
+  background-color: var(--card-dark); list-style: none; padding: 0.5rem 0; margin: 0;
+  border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); min-width: 150px; z-index: 1100;
+  border: 1px solid var(--glass-border);
 }
-.dropdown:hover .dropdown-menu {
-  display: block; /* Show dropdown on hover */
-}
-.dropdown-menu li a {
-  display: block;
-  padding: 0.75rem 1.5rem;
-  color: var(--dark-gray);
-  white-space: nowrap;
-}
-.dropdown-menu li a:hover {
-  background-color: var(--light-gray);
-  color: var(--primary-blue);
-}
+.dropdown:hover .dropdown-menu { display: block; }
+.dropdown-menu li a { display: block; padding: 0.75rem 1.5rem; color: var(--text-muted); white-space: nowrap; }
+.dropdown-menu li a:hover { background-color: rgba(139, 92, 246, 0.1); color: var(--primary-brand); }
 
-/* --- Mobile Responsiveness --- */
 @media (max-width: 768px) {
-  /* ... (keep your existing mobile styles here) ... */
+  /* ... keep your mobile styles ... */
 }

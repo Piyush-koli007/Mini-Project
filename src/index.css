@@ -1,28 +1,57 @@
+/* src/index.css */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&family=Space+Grotesk:wght@400;600;700&display=swap');
+
 :root {
-  --primary-blue: #007bff;
-  --primary-dark-blue: #0056b3;
-  --secondary-green: #28a745;
-  --light-gray: #f8f9fa;
-  --dark-gray: #343a40;
-  --text-color: #495057;
-  --white: #ffffff;
-  --danger-red: #dc3545;
+  /* Gen Z / Cyberpunk Palette */
+  --bg-dark: #09090b;       /* Very dark almost black */
+  --card-dark: #18181b;     /* Slightly lighter for cards */
+  --primary-brand: #8b5cf6; /* Electric Violet */
+  --primary-glow: #a78bfa;
+  --secondary-brand: #10b981; /* Emerald Green (Success/Money) */
+  --accent-hot: #f43f5e;    /* Rose (Actions/Alerts) */
+  
+  --text-main: #ffffff;
+  --text-muted: #a1a1aa;
+  
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-bg: rgba(24, 24, 27, 0.65);
+  
+  --radius-lg: 16px;
+  --radius-xl: 24px;
 }
 
 body {
   margin: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Outfit', sans-serif; /* Clean, modern sans */
+  background-color: var(--bg-dark);
+  color: var(--text-main);
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: var(--light-gray);
+  background-image: 
+    radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.15), transparent 25%),
+    radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.15), transparent 25%);
+  background-attachment: fixed;
 }
 
-html {
-  scroll-behavior: smooth;
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Space Grotesk', sans-serif; /* Techy display font */
+  letter-spacing: -0.02em;
 }
 
-.container {
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
+button {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--card-dark);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-brand);
 }
